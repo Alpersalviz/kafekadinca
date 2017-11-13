@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>My App</title>  
+  
+  <link rel="stylesheet" href="lib/onsen/css/onsenui.css">  
+  <link rel="stylesheet" href="styles/onsen-css-components-blue-basic-theme.css">  
+  <link rel="stylesheet" href="styles/app.css"/>
+
+  <script src="lib/onsen/js/angular/angular.js"></script>    
+  <script src="lib/onsen/js/onsenui.js"></script>  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="lib/list.min.js"></script>
+
+  <script src="cordova.js"></script>
+
+  <script>
+    var module = angular.module('app', ['onsen']);
+  </script>
+
+  <style>
+    .page--menu-page__background {
+      background-color: #333;
+    }
+    
+    .page--menu-page__content {
+      color: white;
+    }
+
+    .menu-close,
+    .menu-close > .toolbar-button {
+      color: #999;
+    }
+
+    .menu-list,
+    .menu-item:first-child,
+    .menu-item:last-child,
+    .menu-item {
+      background-color: transparent;
+      background-image: none !important;
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .menu-item {
+      padding: 0 0 0 20px;
+      line-height: 52px;
+      height: 52px;
+      text-shadow: rgba(0, 0, 0, 0.4) 0px 1px 0px;
+    }
+
+    .menu-item:active {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-notification {
+      display: inline-block;
+      margin-top: 12px;
+      font-size: 14px;
+      height: 16px;
+      line-height: 16px;
+      min-width: 16px;
+      font-weight: 600;
+    }
+
+    .bottom-menu-list,
+    .bottom-menu-item:first-child,
+    .bottom-menu-item:last-child,
+    .bottom-menu-item {
+      border-color: #393939;
+      background-color: transparent;
+      background-image: none !important;
+      color: #ccc;
+    }
+
+    .bottom-menu-item:active {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .desc {
+            line-height: 1.2;
+            font-size: 13px;
+        }
+
+        .card {
+            background-color: white;
+            background-repeat: no-repeat;
+            background-size: cover;
+            color: white;
+            height: 180px;
+            margin: 0 auto;
+            -webkit-filter: blur(4px);
+            filter: blur(4px);
+        }
+        .custom-sub{
+            width: 90%;
+            margin: 0 auto;
+            margin-top: -180px;
+            height: 180px;
+            text-align: center;
+            position: absolute;
+            z-index: 2;
+            color: #FFF;
+        }
+
+        .card-name, .card-desc{
+            width: 80%;
+            margin: 0 auto;
+            text-shadow: 3px 0px 1px rgba(150, 150, 150, 1);
+        }
+
+        .card-toolbar ons-back-button span {
+            color: white;
+        }
+
+        .card-name {
+            font-weight: 600;
+            font-size: 20px;
+            padding: 18px 0 8px 0;
+            text-align: center;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.9;
+            text-align: center;
+            line-height: 1.4;
+        }
+      
+      .ana-sayfa-data{
+        padding-left: 22px;
+        padding-right: 22px;
+      }
+	  #banner{
+	    position: fixed;
+  bottom: 0px;
+  margin-right: auto;
+  margin-left: auto;
+  width:100%;
+  height:200px;
+  background-color:#000;
+	  }
+
+  </style>
+  
+</head>
+
+<body>    
+    
+<ons-modal var="modal">
+  <ons-icon icon="ion-load-c" spin="true"></ons-icon>
+  <br><br>
+  Lütfen Bekleyin.<br>Yükleniyor.
+</ons-modal>
+  
+  <ons-sliding-menu
+    menu-page="menu.html" main-page="page1.html" side="left"
+    var="menu" type="reveal" max-slide-distance="260px" swipable="true">
+  </ons-sliding-menu>
+
+  <ons-template id="menu.html">
+    <ons-page modifier="menu-page">
+      <ons-toolbar style="background-color:#ffdde6" modifier="transparent"></ons-toolbar>
+
+      <ons-list class="menu-list">
+        <ons-list-item class="menu-item home-page" ng-click="menu.setMainPage('page1.html', {closeMenu: true})">
+          <ons-icon icon="fa-plus"></ons-icon>
+          Yemek Tarifleri
+        </ons-list-item>
+
+        <ons-list-item class="menu-item hamile-ara" ng-click="menu.setMainPage('page1.html', {closeMenu: true})">
+          <ons-icon icon="fa-bookmark"></ons-icon>
+          Hamile Ara
+        </ons-list-item>
+
+        <ons-list-item class="menu-item" ng-click="menu.setMainPage('page1.html', {closeMenu: true})">
+          <ons-icon icon="fa-twitter"></ons-icon>
+          Twitter
+        </ons-list-item>
+      </ons-list>
+    </ons-page>
+  </ons-template>
+
+  <ons-template id="page1.html">
+    <ons-navigator var="nanasayfa">
+    <ons-page id="nanasayfa">
+      <ons-toolbar style="background-color: #ed6a8b">
+        <div class="left">
+          <ons-toolbar-button ng-click="menu.toggle()">
+            <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+          </ons-toolbar-button>
+            <div style="margin-top: 5px;" class="right"><input type="search" class="search-input" placeholder="Ara"></input></div>
+        </div>
+        <div class="center">Kafe Kadınca</div>
+		
+      </ons-toolbar>
+
+      <ons-row>
+        <ons-col align="center" id="ana-sayfa-icerik">
+        </ons-col>
+      </ons-row>
+	  	  	<div id="banner">
+	<script type="text/plain"><!--
+google_ad_client = "ca-app-pub-2186852443241659/4900620639";
+/* test */ 
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/plain" class="cc-onconsent-inline-advertising" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+	</div>
+
+    </ons-page>
+
+    </ons-navigator>
+	
+  </ons-template>
+
+  <!-- ürün ayrıntı master page -->
+  <ons-template id="page2.html">
+    <ons-page>
+      <ons-toolbar style="background-color: #ed6a8b">
+        <div class="left"><ons-back-button>Geri</ons-back-button></div>
+          <div style="width: 60%;" class="center" id="page-2-title"></div>
+      </ons-toolbar>
+
+      <div>
+        <ons-scroller>
+          <div class="desc-image">
+            <img id="page-2-img" style="width:100%;">
+          </div>
+          <div class="content-padded" style="padding-left: 10px; padding-right: 10px; padding-bottom: 10px;" id="page-2-content"></div>
+        </ons-scroller>
+      </div>
+    </ons-page>
+  </ons-template>
+
+
+
+  <ons-template id="page3.html">
+    <ons-page>
+      <div style="text-align: center">
+        <ons-toolbar style="background-color: #ed6a8b">
+          <div class="left">
+            <ons-toolbar-button ng-click="menu.toggle()">
+              <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+          </div>
+          <div class="center">Kafe Kadınca</div>
+        </ons-toolbar>
+        <ons-scroller>
+          <ul class="list">
+            <li class="list__item list__item--chevron">
+              Tappable Item
+            </li>
+            <li class="list__item list__item--chevron">
+              Tappable Item
+            </li>
+          </ul>
+        </ons-scroller>
+      </div>
+    </ons-page>
+  </ons-template>
+  <!-- ürün ayrıntı master page -->
+
+  <ons-template id="anasayfa.html">
+    <ons-navigator title="Navigator" var="nanasayfa">
+      <ons-page id="panasayfa">
+        <ons-toolbar>
+          <div class="left">
+            <ons-toolbar-button ng-click="menu.toggle()">
+              <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+          </div>
+          <div class="center">Ana Sayfa</div>
+        </ons-toolbar>
+ 
+<!--ajax work-->
+<script>
+    $(function(){
+        modal.show();
+        var sayfaID = 1;
+        
+        $.getJSON("http://kafekadinca.com/wp-json/posts?filter[category_name]=yemek-tarifleri&page="+sayfaID+"", function( data ) {
+          var items = [];
+            
+          $.each( data, function( key, val ) {
+              
+              localStorage.setItem(val.ID,val.content);
+              var shurt_des = val.content.split('.');
+              
+            items.push('<ons-list-item onclick="nanasayfa.pushPage(\'page2.html\', { animation : \'slide\' }), sayfaShow(\''+val.featured_image.guid+'\',\''+val.title+'\',\''+val.ID+'\')"  style="line-height: 1; padding: 22px 22px 0px 22px;"><div ng-click="foo()" class="card" style="background-image: url('+val.featured_image.guid+'); "></div><div class="custom-sub"><div class="card-name">'+val.title+'</div><div class="card-desc">'+shurt_des[1]+'<br>20 Şubat 2015</div></div></ons-list-item>');
+          });
+
+          $("<div>",{
+              class: "ana-sayfa-data",
+            html: items.join("")
+          }).appendTo( "#ana-sayfa-icerik" );
+            modal.hide();
+        });
+        
+        // Home Click
+        $(".home-page").click(function(){
+            modal.show();
+            $.getJSON("http://kafekadinca.com/wp-json/posts?filter[category_name]=yemek-tarifleri&page="+sayfaID+"", function( data ) {
+          var items = [];
+          $.each( data, function( key, val ) {
+              
+              localStorage.setItem(val.ID,val.content);
+              var shurt_des = val.content.split('.');
+              
+            items.push('<ons-list-item onclick="nanasayfa.pushPage(\'page2.html\', { animation : \'slide\' }), sayfaShow(\''+val.featured_image.guid+'\',\''+val.title+'\',\''+val.ID+'\')"  style="line-height: 1; padding: 22px 22px 0px 22px;"><div ng-click="foo()" class="card" style="background-image: url('+val.featured_image.guid+'); "></div><div class="custom-sub"><div class="card-name">'+val.title+'</div><div class="card-desc">'+shurt_des[1]+'<br>20 Şubat 2015</div></div></ons-list-item>');
+          });
+
+          $("<div>",{
+              class: "ana-sayfa-data",
+            html: items.join("")
+          }).appendTo( "#ana-sayfa-icerik" );
+                modal.hide();
+        });
+            
+        });
+        // Home Click # -->
+        
+        // Search
+        $(".search-input").change(function(){
+            var search = $(this).val();
+                modal.show();
+                $("#ana-sayfa-icerik").html('');
+                $.getJSON("http://kafekadinca.com/wp-json/posts?filter[s]="+search+"", function( data ) {
+              var items = [];
+              $.each( data, function( key, val ) {
+
+                  localStorage.setItem(val.ID,val.content);
+                  var shurt_des = val.content.split('.');
+
+                items.push('<ons-list-item onclick="nanasayfa.pushPage(\'page2.html\', { animation : \'slide\' }), sayfaShow(\''+val.featured_image.guid+'\',\''+val.title+'\',\''+val.ID+'\')"  style="line-height: 1; padding: 22px 22px 0px 22px;"><div ng-click="foo()" class="card" style="background-image: url('+val.featured_image.guid+'); "></div><div class="custom-sub"><div class="card-name">'+val.title+'</div><div class="card-desc">'+shurt_des[1]+'<br>20 Şubat 2015</div></div></ons-list-item>');
+              });
+
+              $("<div>",{
+                  class: "ana-sayfa-data",
+                html: items.join("")
+              }).appendTo( "#ana-sayfa-icerik" );
+                    modal.hide();
+            });
+        });
+        // Search # -->
+        
+    });
+    
+    
+    function sayfaShow(img, title, id){
+        
+        setTimeout(function(){
+            var content = localStorage.getItem(id);
+            $("#page-2-title").html("<marquee direction='left'>"+title+"</marquee>"),
+            $("#page-2-img").attr("src",img),
+            $("#page-2-content").html(content);
+            },1000);
+        }
+    
+    
+</script>
+          
+</body>
+</html>
